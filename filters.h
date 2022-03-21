@@ -3,6 +3,7 @@
 #include "structs.h"
 #include "typedefs.h"
 #include <stdbool.h>
-extern int check_greyscale(image_t* img);
-void tes();
+/* function declaration goes here */
+extern bool check_greyscale(image_t* img);
+extern void contoh_function();
 #endif
