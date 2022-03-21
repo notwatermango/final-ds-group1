@@ -11,7 +11,7 @@
 
 int main() {
   contoh_function(); /* prints welcome */
-  image_t* img = open_img("./images/tes_red_24.bmp");
+  image_t* img = open_img("./images/land1.bmp");
   if(img == NULL) {puts("bad img");return 0;}
 
   /* test function here */
@@ -24,6 +24,9 @@ int main() {
   if(img->dominant == RED) printf("dominant red\n");
   if(img->dominant == BLUE) printf("dominant blue\n");
   if(img->dominant == GREEN) printf("dominant green\n");
+
+  puts("---?contrast?---");
+  printf("RMS contrast val: %lf\n", img->contrast);
 
 
 

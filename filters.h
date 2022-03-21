@@ -9,5 +9,6 @@ u64 max(u64 a, u64 b);
 /* function declaration goes here */
 extern bool check_greyscale(image_t* img);
 extern colors_t get_dominant_color(image_t* img);
+extern f64 get_rms_contrast(image_t* img);
 extern void contoh_function();
 #endif

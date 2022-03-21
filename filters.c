@@ -1,5 +1,6 @@
 #include "filters.h"
 #include <stdio.h>
+#include <math.h>
 
 inline u64 min(u64 a, u64 b) {return (a>b?b:a);}
 inline u64 max(u64 a, u64 b) {return (a>b?a:b);}
@@ -37,6 +38,32 @@ colors_t get_dominant_color(image_t* img) {
   if(max_sum == gsum && gsum > rsum+(7*(img->data_size)) && gsum > bsum+(7*(img->data_size))) return GREEN;
   if(max_sum == bsum && bsum > rsum+(7*(img->data_size)) && bsum > gsum+(7*(img->data_size))) return BLUE;
   return NONE;
+}
+
+/*
+https://en.wikipedia.org/wiki/Contrast_(vision)#RMS_contrast
+*/
+f64 get_rms_contrast(image_t* img) {
+  f64 avg_intensity = 0;
+  for (int i = 0; i < (img->data_size); i+=3)
+  {
+    u64 r = img->data[i+2], g = img->data[i+1], b = img->data[i];
+    f64 pixel_intensity = ((0.2126 * r) + (0.7152 * g) + (0.0722 * b))/(f64)255;
+    avg_intensity += pixel_intensity/255;
+  }
+  avg_intensity /= (f64)(img->data_size);
+  f64 rms = 0;
+  for (int i = 0; i < (img->data_size); i+=3)
+  {
+    u64 r = img->data[i+2], g = img->data[i+1], b = img->data[i];
+    f64 pixel_intensity = ((0.2126 * r) + (0.7152 * g) + (0.0722 * b))/(f64)255;
+    rms += (pixel_intensity - avg_intensity) * (pixel_intensity - avg_intensity);
+  }
+  rms = sqrtl(rms/(img->data_size));
+  #ifdef DEBUG
+  printf("rms %lf\n", rms);
+  #endif
+  return rms;
 }
 
 void contoh_function() {

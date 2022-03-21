@@ -41,5 +41,6 @@ typedef struct image_s {
   u8* data;
   bool greyscale;
   colors_t dominant;
+  f64 contrast;
 } image_t;
 #endif
