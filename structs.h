@@ -5,6 +5,11 @@
 #include<stdbool.h>
 /* pack struct dalam byte; bmp header 54 bytes */
 #pragma pack(push, 1) 
+
+typedef enum colors_e {
+  NONE, RED, GREEN, BLUE
+} colors_t;
+
 typedef struct header_s {
   u16 type;          
   u32 size_bytes;
@@ -35,5 +40,6 @@ typedef struct image_s {
   u32 height_px;
   u8* data;
   bool greyscale;
+  colors_t dominant;
 } image_t;
 #endif

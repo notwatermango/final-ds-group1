@@ -15,8 +15,16 @@ int main() {
   if(img == NULL) {puts("bad img");return 0;}
 
   /* test function here */
+  puts("---?greyscale?---");
   if(img->greyscale) puts("yey it's greyscale");
   else puts("not greyscale");
+
+  puts("---?color dominant?---");
+  if(img->dominant == NONE) printf("no dominant color\n"); 
+  if(img->dominant == RED) printf("dominant red\n");
+  if(img->dominant == BLUE) printf("dominant blue\n");
+  if(img->dominant == GREEN) printf("dominant green\n");
+
 
 
   return 0;

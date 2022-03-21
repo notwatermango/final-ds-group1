@@ -18,6 +18,7 @@ image_t* open_img(char *filename) {
   if(fread(img->data, sizeof(u8), img->data_size, fp) != img->data_size) {fclose(fp);free(img);return NULL;} 
   msg("datasize ok");
 
+  img->dominant = get_dominant_color(img);
   img->greyscale = check_greyscale(img);
   fclose(fp);
   return img;
