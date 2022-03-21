@@ -4,12 +4,11 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#undef notwatermango
-#define msg(x)
-#ifdef notwatermango
-#undef msg
+// #define msg(x)
+// #ifdef notwatermango
+// #undef msg
 #define msg(x) puts(x)
-#endif
+// #endif
 
 typedef uint8_t u8;
 typedef uint16_t u16;
