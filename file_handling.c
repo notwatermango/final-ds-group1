@@ -4,7 +4,10 @@
 image_t* open_img(char *filename) {
   printf("try %s\n", filename);
   FILE* fp = fopen(filename, "r");
-  if(fp == NULL) return NULL; 
+  if(fp == NULL) {
+    msg("fail fp");
+    return NULL; 
+  }
   msg("fp ok");
   image_t* img = (image_t*) malloc(sizeof(image_t));
   if(fread(&(img->header), sizeof(header_t), 1, fp) != 1) {fclose(fp);free(img);return NULL;} 

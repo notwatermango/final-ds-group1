@@ -11,7 +11,7 @@
 
 int main() {
   contoh_function(); /* prints welcome */
-  image_t* img = open_img("./images/land1.bmp");
+  image_t* img = open_img("./images/tes_red_24.bmp");
   if(img == NULL) {puts("bad img");return 0;}
 
   /* test function here */
