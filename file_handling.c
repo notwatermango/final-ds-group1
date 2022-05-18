@@ -26,7 +26,7 @@ image_t* open_img(char *filename) {
   img->dominant = get_dominant_color(img);
   img->greyscale = check_greyscale(img);
   img->contrast = get_rms_contrast(img);
-  
+
   fclose(fp);
   return img;
 }
