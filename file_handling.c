@@ -52,7 +52,7 @@ char** printdir(char* dir) {
   }
   else {
     chdir(dir);
-    // first and second is . and .., so we skip.
+    // ada .. sama ., kita skip.
     int i = 0;
     while ((entry = readdir(dp)) != NULL) {
       if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) {
@@ -69,8 +69,7 @@ char** printdir(char* dir) {
 }
 
 char* concat(const char* nameFile) {
-  char* result = malloc(strlen(path) + strlen(nameFile) + 1); // +1 for the null-terminator
-  // in real code you would check for errors in malloc here
+  char* result = malloc(strlen(path) + strlen(nameFile) + 1);
   strcpy(result, path);
   strcat(result, nameFile);
   return result;
