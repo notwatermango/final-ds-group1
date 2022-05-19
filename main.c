@@ -17,7 +17,12 @@ int main() {
   for (int i = 0; i < listFile; i++) {
     char* fileWithPath = concat(fileList[i]);
     image_t* img = open_img(fileWithPath);
-    if (img == NULL) { puts("bad img");return 0; }
+    if (img == NULL) {
+      puts("bad img");
+      // return 0;
+      // kalo error, continue aja dulu, tapi kalo udah masuk data fix error++
+      continue;
+    }
 
     /* test function here */
     puts("---?greyscale?---");
@@ -32,6 +37,7 @@ int main() {
 
     puts("---?contrast?---");
     printf("RMS contrast val: %lf\n", img->contrast);
+    // free memory string dari path hasil concat. 
     free(fileWithPath);
   }
   return 0;
