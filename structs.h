@@ -11,21 +11,21 @@ typedef enum colors_e {
 } colors_t;
 
 typedef struct header_s {
-  u16 type;          
+  u16 type;
   u32 size_bytes;
   u16 reserved1;
   u16 reserved2;
-  u32 offset; 
+  u32 offset;
   u32 header_size_bytes;
   u32 width_px;
-  u32 height_px;        
-  u16 planes;            
+  u32 height_px;
+  u16 planes;
   u16 bits_perpx;
   u32 compression_type;
   u32 imagesize_bytes;
   u32 xresolution_pxperm;
   u32 yresolution_pxperm;
-  u32 numofcolors;            
+  u32 numofcolors;
   u32 importantcolors;
 } header_t;
 /* pack default */
@@ -41,6 +41,7 @@ typedef struct image_s {
   u8* data;
   bool greyscale;
   colors_t dominant;
+  char* path;
   f64 contrast;
 } image_t;
 
@@ -50,5 +51,12 @@ typedef struct {
   int size;           /* current element count */
   int cap;            /* max element on memory */
 } dyn_arr;
+
+typedef struct AVL {
+  int height;
+  image_t* elements;
+  struct AVL* left;
+  struct AVL* right;
+} AVL;
 
 #endif

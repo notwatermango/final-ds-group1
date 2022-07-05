@@ -6,4 +6,5 @@
 dyn_arr *dyn_arr_init();
 void dyn_arr_insert(dyn_arr *arr, image_t *img);
 void dyn_arr_display(dyn_arr *arr);
+void dyn_arr_sort(dyn_arr *arr);
 #endif
