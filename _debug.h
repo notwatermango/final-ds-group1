@@ -1,7 +1,7 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 /* uncomment buat debug */
-#define DEBUG
+// #define DEBUG
 /* ~~~~~~~~~~~~~~~~~~~~~*/
 #define msg(x)
 #ifdef DEBUG

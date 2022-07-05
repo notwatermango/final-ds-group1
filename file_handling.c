@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 const char* path = "./images/";
+
 image_t* open_img(char* filename) {
   printf("try %s\n", filename);
   FILE* fp = fopen(filename, "r");
@@ -46,7 +47,7 @@ char** printdir(char* dir) {
   struct stat statbuf;
   // ini dikali sama banyaknya file, kalo mau otomatis kayanya bisa tinggal while bawah(?) tapi gak efisien
   // masih bingunk
-  char** fileList = malloc(sizeof(char*) * 50000);
+  char** fileList = malloc(sizeof(char*) * 5000);
   if ((dp = opendir(dir)) == NULL) {
     fprintf(stderr, "cannot open directory: %s\n", dir);
   }
@@ -69,7 +70,7 @@ char** printdir(char* dir) {
 }
 
 char* concat(const char* nameFile) {
-  char* result = malloc(strlen(path) + strlen(nameFile) + 1);
+  char* result = malloc((strlen(path) + strlen(nameFile) + 1) * sizeof(char));
   strcpy(result, path);
   strcat(result, nameFile);
   return result;

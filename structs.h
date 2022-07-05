@@ -43,4 +43,12 @@ typedef struct image_s {
   colors_t dominant;
   f64 contrast;
 } image_t;
+
+/* size will be increased by 5 per expansion */
+typedef struct {
+  image_t** elements;
+  int size;           /* current element count */
+  int cap;            /* max element on memory */
+} dyn_arr;
+
 #endif
