@@ -49,14 +49,14 @@ int main() {
 
     // puts("---?contrast?---");
     printf("RMS contrast val: %lf\n", img->contrast);
-    // free memory string dari path hasil concat. 
-    free(fileWithPath);
+
     size++;
 
 
 
 
   }
+  dyn_arr_sort(arr);
   dyn_arr_display(arr);
   return 0;
 }
