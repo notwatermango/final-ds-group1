@@ -13,8 +13,9 @@ int main() {
   contoh_function(); /* prints welcome */
   char** fileList = printdir("./images");
   int listFile;
+  int size = 0;
   listFile = sizeof(fileList) / sizeof(char);
-  for (int i = 0; i < listFile; i++) {
+  for (int i = 0; i < 24; i++) {
     char* fileWithPath = concat(fileList[i]);
     image_t* img = open_img(fileWithPath);
     if (img == NULL) {
@@ -39,6 +40,8 @@ int main() {
     printf("RMS contrast val: %lf\n", img->contrast);
     // free memory string dari path hasil concat. 
     free(fileWithPath);
+    size++;
   }
+  printf("\n\ndi sini %d\n", size); 
   return 0;
 }

@@ -46,7 +46,7 @@ char** printdir(char* dir) {
   struct stat statbuf;
   // ini dikali sama banyaknya file, kalo mau otomatis kayanya bisa tinggal while bawah(?) tapi gak efisien
   // masih bingunk
-  char** fileList = malloc(sizeof(char*) * 6);
+  char** fileList = malloc(sizeof(char*) * 50000);
   if ((dp = opendir(dir)) == NULL) {
     fprintf(stderr, "cannot open directory: %s\n", dir);
   }
