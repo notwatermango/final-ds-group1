@@ -9,56 +9,60 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <time.h>
 #include "avl.h"
 
 int main() {
-  contoh_function(); /* prints welcome */
+  welcome_function(); /* prints welcome */
   char** fileList = printdir("./images");
-  int listFile;
   int size = 0;
-  listFile = sizeof(fileList) / sizeof(char);
+
+  clock_t begin = clock();
 
   dyn_arr* arr = dyn_arr_init();
   avl_node_t* tree = NULL;
 
+  // Untuk dynamic array
   for (int i = 0; i < 24; i++) {
     if (fileList[i] == NULL) break;
-    printf("%s\n", fileList[i]);
     char* fileWithPath = concat(fileList[i]);
     image_t* img = open_img(fileWithPath);
     if (img == NULL) {
       puts("bad img");
-      // return 0;
-      // kalo error, continue aja dulu, tapi kalo udah masuk data fix error++
       continue;
     }
     free(img->data);
     img->data = NULL;
-    puts("1");
     dyn_arr_insert(arr, img);
-    puts("2");
-    tree = avl_insert(tree, img);
-    puts("3");
-    /* test function here */
-
-    // puts("---?greyscale?---");
-    // if (img->greyscale) puts("yey it's greyscale");
-    // else puts("not greyscale");
-
-    // puts("---?color dominant?---");
-    // if (img->dominant == NONE) printf("no dominant color\n");
-    // if (img->dominant == RED) printf("dominant red\n");
-    // if (img->dominant == BLUE) printf("dominant blue\n");
-    // if (img->dominant == GREEN) printf("dominant green\n");
-
-    // puts("---?contrast?---");
-    printf("RMS contrast val: %lf\n", img->contrast);
     size++;
   }
-  puts("----------arr---------");
+
+  puts("--------- Dynamic Array (Sorted) ---------");
   dyn_arr_sort(arr);
   dyn_arr_display(arr);
-  puts("----------tree--------");
+  clock_t end = clock();
+  double timeDynArr = (double)(end - begin) / CLOCKS_PER_SEC;
+
+  begin = clock();
+  // Untuk AVL Tree
+  for (int i = 0; i < 24; i++) {
+    if (fileList[i] == NULL) break;
+    char* fileWithPath = concat(fileList[i]);
+    image_t* img = open_img(fileWithPath);
+    if (img == NULL) {
+      puts("bad img");
+      continue;
+    }
+    free(img->data);
+    img->data = NULL;
+    tree = avl_insert(tree, img);
+  }
+  end = clock();
+
+  puts("\n---------------- AVL Tree -----------------");
   avl_display(tree);
+  double timeAVLTree = (double)(end - begin) / CLOCKS_PER_SEC;
+  printf("\n%lfs Time for Dynamic Array (Insert, Sorting and Display)", timeDynArr);
+  printf("\n%lfs Time for AVL Tree (Insert and Display)", timeAVLTree);
   return 0;
 }

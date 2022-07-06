@@ -81,8 +81,7 @@ avl_node_t *avl_init() {
 void avl_display(avl_node_t* node) {
 	if (node == NULL) return;
 	avl_display(node->left);
-  printf("%lf %s\n", node->img->contrast, node->img->path);
+  printf("RMS CONTRAST VAL: %lf %s\n", node->img->contrast, node->img->path);
 	avl_display(node->right);
-
 }
 

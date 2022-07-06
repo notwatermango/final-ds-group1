@@ -9,7 +9,7 @@
 const char* path = "./images/";
 
 image_t* open_img(char* filename) {
-  printf("try %s\n", filename);
+  // printf("try %s\n", filename);
   FILE* fp = fopen(filename, "r");
   if (fp == NULL) {
     msg("fail fp");
@@ -24,7 +24,9 @@ image_t* open_img(char* filename) {
   img->bytes_perpx = (img->header).bits_perpx / 8;
   img->data_size = (img->header).size_bytes - sizeof(header_t);
 
-  if (img->header.bits_perpx != 24) { printf("bpp: %d\nbpp/bit depth should be 24\n", img->header.bits_perpx);fclose(fp);free(img);return NULL; }
+  if (img->header.bits_perpx != 24) {
+    // printf("bpp: %d\nbpp/bit depth should be 24\n", img->header.bits_perpx);fclose(fp);free(img);return NULL;
+  }
   msg("bpp ok");
 
   if ((img->header).compression_type) puts("bruh compressed");
@@ -42,12 +44,11 @@ image_t* open_img(char* filename) {
   return img;
 }
 
+// Referensi : https://stackoverflow.com/questions/8149569/scan-a-directory-to-find-files-in-c
 char** printdir(char* dir) {
   DIR* dp;
   struct dirent* entry;
   struct stat statbuf;
-  // ini dikali sama banyaknya file, kalo mau otomatis kayanya bisa tinggal while bawah(?) tapi gak efisien
-  // masih bingunk
   char** fileList = malloc(sizeof(char*) * 5000);
   if ((dp = opendir(dir)) == NULL) {
     fprintf(stderr, "cannot open directory: %s\n", dir);

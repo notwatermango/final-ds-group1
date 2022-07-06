@@ -66,6 +66,12 @@ f64 get_rms_contrast(image_t* img) {
   return rms;
 }
 
-void contoh_function() {
+void welcome_function() {
+  puts("Final Project Data Structures LC75 - Kelompok 1");
+  puts("2502005093 - Danzel");
+  puts("2501976503 - Fabian Habil Ramdhan");
+  puts("2540130781 - Florencia Irena");
+  puts("2501980091 - I Nyoman Yogasmara P. D.");
+  puts("2540117584 - Steven The");
   puts("Welcome");
 }

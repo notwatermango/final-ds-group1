@@ -18,7 +18,7 @@ void dyn_arr_insert(dyn_arr* arr, image_t* img) {
 
 void dyn_arr_display(dyn_arr* arr) {
   for (int i = 0; i < arr->size; ++i) {
-    printf("%lf %s\n", arr->elements[i]->contrast, arr->elements[i]->path);
+    printf("RMS CONTRAST VAL: %lf %s\n", arr->elements[i]->contrast, arr->elements[i]->path);
   }
 }
 
