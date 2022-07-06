@@ -52,11 +52,11 @@ typedef struct {
   int cap;            /* max element on memory */
 } dyn_arr;
 
-typedef struct AVL {
+typedef struct avl_node_s {
   int height;
-  image_t* elements;
-  struct AVL* left;
-  struct AVL* right;
-} AVL;
+  image_t* img;
+  struct avl_node_s* left;
+  struct avl_node_s* right;
+} avl_node_t;
 
 #endif

@@ -1,98 +1,88 @@
 #include "avl.h"
 
-AVL* initAVL() {
-    AVL* tempAVL = (AVL*)malloc(sizeof(AVL));
-    tempAVL->left = NULL;
-    tempAVL->right = NULL;
-    return tempAVL;
+avl_node_t *create_new_node(image_t *img) {
+  avl_node_t *new_node = (avl_node_t*) malloc(sizeof(avl_node_t));
+  new_node->height 	= 0;
+  new_node->left   	= NULL;
+  new_node->right  	= NULL;
+	new_node->img 		= img;
+	return new_node;
 }
 
-int height(AVL* current) {
-    if (current == NULL) return 0;
-    else return current->height;
+int height(avl_node_t *node) {
+	if (node == NULL) return -1;
+  else return node->height;
 }
 
-int getBalance(AVL* current) {
-    if (current == NULL) return 0;
-    else return height(current->left) - height(current->right);
+int get_balance_factor(avl_node_t *node) {
+  if (node == NULL) return 0;
+  return height(node->left) - height(node->right);
 }
 
-AVL* rotateRight(AVL* current) {
-    AVL* targetRotate = current->left;
-    AVL* targetRotateChildrenRight = targetRotate->right;
-    targetRotate->right = current;
-    current->left = targetRotateChildrenRight;
-    current->height = 1 + max(height(current->left), height(current->right));
-    targetRotate->height = 1 + max(height(targetRotate->left), height(targetRotate->right));
-    return targetRotate;
+avl_node_t *rotate_right(avl_node_t *node) {
+  avl_node_t *left_child = node->left;
+  avl_node_t *left_child_right = left_child->right;
+
+  left_child->right = node;
+  node->left = left_child_right;
+
+  node->height = max(height(node->left), height(node->right)) + 1;
+  left_child->height = max(height(left_child->left), height(left_child->right)) + 1;
+
+  return left_child;
 }
 
-AVL* rotateLeft(AVL* current) {
-    AVL* targetRotate = current->right;
-    AVL* targetRotateChildrenLeft = targetRotate->left;
-    targetRotate->left = current;
-    current->right = targetRotateChildrenLeft;
-    current->height = 1 + max(height(current->left), height(current->right));
-    targetRotate->height = 1 + max(height(targetRotate->left), height(targetRotate->right));
-    return targetRotate;
+avl_node_t *rotate_left(avl_node_t *node) {
+  avl_node_t *right_child = node->right;
+  avl_node_t *right_child_left = right_child->left;
+
+  right_child->left = node;
+  node->right = right_child_left;
+
+  node->height = max(height(node->left), height(node->right)) + 1;
+  right_child->height = max(height(right_child->left), height(right_child->right)) + 1;
+  return right_child;
 }
 
-AVL* createNewAVL(image_t* img) {
-    AVL* newAVL
-        = (AVL*)malloc(sizeof(AVL));
-    newAVL->elements = img;
-    newAVL->left = NULL;
-    newAVL->right = NULL;
-    return newAVL;
-}
+avl_node_t *rebalance(avl_node_t *node) {
+  node->height = max(height(node->left), height(node->right)) + 1;
 
-AVL* insert(AVL* current, image_t* img) {
-    if (current == NULL) {
-        return createNewAVL(img);
+  int balance_factor = get_balance_factor(node);
+  if (balance_factor > 1) {
+    if (get_balance_factor(node->left) > 0) {           /* LL */
+      return rotate_right(node);
+    } else {                                            /* LR */
+      node->left = rotate_left(node->left);
+      return rotate_right(node);
     }
-
-    else if (img->contrast > current->elements->contrast) {
-        current->right = insert(current->right, img);
+  } else if (balance_factor < -1) {
+    if (get_balance_factor(node->right) < 0) {          /* RR */
+      return rotate_left(node);
+    } else {                                            /* RL */
+      node->right = rotate_right(node->right);      
+      return rotate_left(node);
     }
+  } 
 
-    else if (img->contrast < current->elements->contrast) {
-        current->left = insert(current->left, img);
-    }
-
-    else {
-        return current;
-    }
-
-    current->height = 1 + max(height(current->left), height(current->right));
-
-    int balance = getBalance(current);
-
-    if (balance > 1) {
-        if (img->contrast < current->left->elements->contrast) {
-            return rotateRight(current);
-        }
-
-        else if (img->contrast > current->left->elements->contrast) {
-            current->left = rotateLeft(current->left);
-            return rotateRight(current);
-        }
-    }
-
-    else if (balance < -1) {
-        if (img->contrast > current->right->elements->contrast) {
-            return rotateLeft(current);
-        }
-
-        else if (img->contrast < current->right->elements->contrast) {
-            current->right = rotateRight(current->right);
-            return rotateLeft(current);
-        }
-    }
-    return current;
+  return node;
 }
 
-AVL* avl_init() {
-    AVL* newAVL
-        = (AVL*)malloc(sizeof(AVL));
-    return newAVL;
+avl_node_t *avl_insert(avl_node_t *node, image_t *img) {
+  if (node == NULL) return node = create_new_node(img);
+  else if (img->contrast < node->img->contrast) node->left = avl_insert(node->left, img);
+  else node->right = avl_insert(node->right, img);
+  return rebalance(node);
 }
+
+avl_node_t *avl_init() {
+	return NULL;
+}
+
+void avl_display(avl_node_t* node) {
+	if (node == NULL) return;
+	avl_display(node->left);
+  printf("%lf %s\n", node->img->contrast, node->img->path);
+	avl_display(node->right);
+
+}
+

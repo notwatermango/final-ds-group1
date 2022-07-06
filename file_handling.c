@@ -51,6 +51,7 @@ char** printdir(char* dir) {
   char** fileList = malloc(sizeof(char*) * 5000);
   if ((dp = opendir(dir)) == NULL) {
     fprintf(stderr, "cannot open directory: %s\n", dir);
+    return NULL;
   }
   else {
     chdir(dir);

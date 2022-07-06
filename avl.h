@@ -7,7 +7,7 @@
 
 #ifndef AVL_H
 #define AVL_H
-extern void test_function_avl();
-extern AVL* insert(AVL* current, image_t* img);
-extern AVL* avl_init();
+extern avl_node_t *avl_init();
+extern void avl_display(avl_node_t* node);
+avl_node_t *avl_insert(avl_node_t *node, image_t *img);
 #endif
